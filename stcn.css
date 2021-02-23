@@ -1,0 +1,36 @@
+body {
+  background-color: #124165;
+  font-family:  helvetica, sans-serif;
+}
+
+p, h1, h2, pre {
+  margin: 10px 80px 20px;
+} 
+
+h2 {
+  margin: 10px 80px 0px;
+}
+
+.wrapper {
+  margin: auto;
+  width:50%;
+  max-width: 1000px;
+  height: 2000px;
+  background-color: white;
+}
+
+hr {
+  margin: 10px 80px 30px;
+}
+
+
+.check, .text {
+  margin: 20px 80px 20px;
+  height: 40px;
+  width: 80px;
+}
+
+.output {
+ font-family: monospace;
+
+}
