@@ -4,95 +4,207 @@
 <head>
   <meta charset="utf-8">
 
-  <title>STCN bookmarklet</title>
+  <title>STCN bookmarklets</title>
 
   <link rel="stylesheet" href="stcn.css"> 
 
 </head>
 
 <body>
-	<div class="wrapper">
-		<br>
-		<h1>Get collation for multi-volume works</h1>
-		<p>This bookmarklet reads the 147B/02 field in a full PICA record, converts the superscript markup to true superscripts, enumerates the volumes, and copies the result to the clipboard.</p>
-		<p>To use: Switch to the full PICA record, and click on the button on your bookmarks bar.</p>
-		<p>It only works in Chrome and Edge at present – Firefox doesn't allow this use of the clipboard. (Untested in Opera etc.)</p>
-	<hr>
-	<h2>For Chrome or Edge</h2>
-	<p>To install, drag the button below onto your Bookmarks Bar. (If the Bookmarks Bar isn't visible, press CTRL+SHIFT+B to reveal it.)</p>
-			
+  <div class="wrapper">
+    <br>
+    <h1>Some bookmarklets for STCN work</h1>
+    <p>These are small scripts designed to work in the web catalogue of the STCN. They target specific elements of the record and copy them into the clipboard, for use in other applications.</p>
+    <p>They only work in Chrome and Edge at present – Firefox doesn't allow this use of the clipboard. (Untested in Opera etc.)</p>
+    <p>To install, drag the buttons below onto your Bookmarks Bar. (If the Bookmarks Bar isn't visible, press CTRL+SHIFT+B to reveal it.) To use, click on the button in the bookmarks bar and the script will run in the current page.</p>
 
+  <hr>
+  <h2>(1) Get PPN</h2>
+    <p>Captures the PPN. The first click marks it up for a WinIBW search (e.g. 'z ppn 012345678'). A second click will give it the filename structure for an STCN illustration (e.g. 'STCN_012345678_01')</p>
+    <p>The PPN changes colour on each click.</p>
+      <a href="javascript:(function(){function e(e){const t=document.createElement('textarea');t.value=e,t.setAttribute('readonly',''),t.style.position='absolute',t.style.left='-9999px',document.body.appendChild(t);const n=document.getSelection().rangeCount>0&&document.getSelection().getRangeAt(0);t.select(),document.execCommand('copy'),document.body.removeChild(t),n&&(document.getSelection().removeAllRanges(),document.getSelection().addRange(n))}var t=document.getElementsByTagName('table')[1].getElementsByTagName('tr'),n=t[t.length-1],o=n.getElementsByClassName('rec_title');o=o[0].innerText,document.getElementsByClassName('ppn_checked').length>0?(e('STCN_'+o+'_01'),n.style.color='deepPink'):(e('z ppn '+o),n.style.color='green',n.classList.add('ppn_checked'))})();"><button class="text">Get PPN</button></a>
+  <br>
 
-  <a href="javascript:(function(){var e={holdings:{}},t=1,l=document.getElementsByClassName('smaller')[1].getElementsByTagName('table')[0].getElementsByTagName('tr');for(i=0;i<l.length;i++){var n=l[i].getElementsByTagName('td'),a=n[0].innerText,g=n[1].innerText;if('2'==a[0]){var c={},o=a.match(/.*?\/(\d+)/)[1];c[a.match(/(.*?)\/\d+/)[1]]=g,e.holdings[o]?e.holdings[o]=Object.assign(e.holdings[o],c):e.holdings[o]=c}else e[a]?e[a=a+'/'+ ++t]=g:(t=1,e[a]=g)}for(a in e.holdings){var r=e.holdings[a]['209A'];/IR\-DTC/.test(r)||delete e.holdings[a]}(function(e){const t=document.createElement('textarea');t.value=e,t.setAttribute('readonly',''),t.style.position='absolute',t.style.left='-9999px',document.body.appendChild(t);const l=document.getSelection().rangeCount>0&&document.getSelection().getRangeAt(0);t.select(),document.execCommand('copy'),document.body.removeChild(t),l&&(document.getSelection().removeAllRanges(),document.getSelection().addRange(l))})(e['147B/02'].replace(/`SUP`2`LO`/g,'²').replace(/`SUP`3`LO`/g,'³').replace(/`SUP`4`LO`/g,'⁴').replace(/`SUP`5`LO`/g,'⁵').replace(/`SUP`6`LO`/g,'⁶').replace(/`SUP`8`LO`/g,'⁸').replace(/`SUP`10`LO`/g,'¹⁰').replace(/`SUP`12`LO`/g,'¹²').replace(/`SUP`14`LO`/g,'¹⁴').replace(/`SUP`16`LO`/g,'¹⁶').replace(/`SUP`18`LO`/g,'¹⁸').replace(/`SUP`4\/8`LO`/g,'⁴/⁸').replace(/`SUP`8\/4`LO`/g,'⁸/⁴').replace(/(\d+)\#/g,'; vol.$1: ').replace(/\$a/g,'').replace(/^\; /,''))})();"><button class="text">STCN collation</button></a>
-	<br>
-	<p><span class="output-title">Input: </span><span class="output">1#A-2E`SUP`8`LO` 2F`SUP`8`LO` 2#π1 A-2F`SUP`8`LO` 2G`SUP`2`LO`</span></p>
-	<p><span class="output-title">Output: </span><span class="output">vol.1: A-2E⁸ 2F⁸ ; vol.2: π1 A-2F⁸ 2G²</span></p>
+  <hr>
+  <h2>(2) Get link to search for KB copy</h2>
+    <p>This script captures the shelfmark of the first KB copy, if present, and marks it up as a link to perform an <i>aanvraagnummer</i> search in the KB catalogue. This can be pasted into the address bar in a new browser tab.</p> 
+    <a href="javascript:(function(){var e=document.getElementsByTagName('table')[1].getElementsByTagName('tr'),t=e.length,n=e[t-2],l='';n.getElementsByClassName('rec_lable')[0].innerText.match(/URL\:./)&&(n=e[t-3]);var o='';for(l=(l=n.getElementsByClassName('rec_title'))[0].getElementsByTagName('div'),i=0;i<l.length;i++)if('Den Haag, KB'==l[i].children[0].innerText){o=l[i].children[1].innerText,l[i].children[1].style.color='green';break}(function(e){const t=document.createElement('textarea');t.value=e,t.setAttribute('readonly',''),t.style.position='absolute',t.style.left='-9999px',document.body.appendChild(t);const n=document.getSelection().rangeCount>0&&document.getSelection().getRangeAt(0);t.select(),document.execCommand('copy'),document.body.removeChild(t),n&&(document.getSelection().removeAllRanges(),document.getSelection().addRange(n))})('https://opc-kb.oclc.org/DB=1/SET=3/TTL=1/CLK?IKT=53&TRM='+(o=o.replace(/^\:./g,'').replace(/ +/g,'+')))})();"><button class="text">KB copy</button></a>
+    <p><span class="output-title">Input: </span><span class="output">Den Haag, KB: pflt 14965</span></p>
+    <p><span class="output-title">Output: </span><span class="output">https://opc-kb.oclc.org/DB=1/SET=3/TTL=1/CLK?IKT=53&TRM=pflt+14965</span></p>
+  <hr>
+  <h2>(3) Get collation for multi-volume works</h2>
+    <p>This bookmarklet reads the 147B/02 field in a full PICA record, converts the superscript markup to true superscripts, enumerates the volumes, and copies the result to the clipboard.</p>
+    <p>Switch to the full PICA record before clicking on the button on your bookmarks bar.</p>
+    <a href="javascript:(function(){var e={holdings:{}},t=1,l=document.getElementsByClassName('smaller')[1].getElementsByTagName('table')[0].getElementsByTagName('tr');for(i=0;i<l.length;i++){var n=l[i].getElementsByTagName('td'),a=n[0].innerText,g=n[1].innerText;if('2'==a[0]){var c={},o=a.match(/.*?\/(\d+)/)[1];c[a.match(/(.*?)\/\d+/)[1]]=g,e.holdings[o]?e.holdings[o]=Object.assign(e.holdings[o],c):e.holdings[o]=c}else e[a]?e[a=a+'/'+ ++t]=g:(t=1,e[a]=g)}for(a in e.holdings){var r=e.holdings[a]['209A'];/IR\-DTC/.test(r)||delete e.holdings[a]}(function(e){const t=document.createElement('textarea');t.value=e,t.setAttribute('readonly',''),t.style.position='absolute',t.style.left='-9999px',document.body.appendChild(t);const l=document.getSelection().rangeCount>0&&document.getSelection().getRangeAt(0);t.select(),document.execCommand('copy'),document.body.removeChild(t),l&&(document.getSelection().removeAllRanges(),document.getSelection().addRange(l))})(e['147B/02'].replace(/`SUP`2`LO`/g,'²').replace(/`SUP`3`LO`/g,'³').replace(/`SUP`4`LO`/g,'⁴').replace(/`SUP`5`LO`/g,'⁵').replace(/`SUP`6`LO`/g,'⁶').replace(/`SUP`8`LO`/g,'⁸').replace(/`SUP`10`LO`/g,'¹⁰').replace(/`SUP`12`LO`/g,'¹²').replace(/`SUP`14`LO`/g,'¹⁴').replace(/`SUP`16`LO`/g,'¹⁶').replace(/`SUP`18`LO`/g,'¹⁸').replace(/`SUP`4\/8`LO`/g,'⁴/⁸').replace(/`SUP`8\/4`LO`/g,'⁸/⁴').replace(/(\d+)\#/g,'; vol.$1: ').replace(/\$a/g,'').replace(/^\; /,''))})();"><button class="text">Multi-vol collation</button></a>
+    <br>
+    <p><span class="output-title">Input: </span><span class="output">1#A-2E`SUP`8`LO` 2F`SUP`8`LO` 2#π1 A-2F`SUP`8`LO` 2G`SUP`2`LO`</span></p>
+    <p><span class="output-title">Output: </span><span class="output">vol.1: A-2E⁸ 2F⁸ ; vol.2: π1 A-2F⁸ 2G²</span></p>
+  <hr>
+  <h2>Full code</h2>
 
-<br>
-<hr>
-	<h2>Full code</h2>
+  <p>(1) Get PPN</p>
+    <pre>
+(function(){
+//STCN_ppn_03.js
+  function copyToClipboard (str) {
+    const el = document.createElement('textarea');  // Create a < textarea > element
+    el.value = str;                                 // Set its value to the string that you want copied
+    el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+    el.style.position = 'absolute';                 
+    el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+    document.body.appendChild(el);                  // Append the < textarea > element to the HTML document
+    const selected =            
+    document.getSelection().rangeCount > 0          // Check if there is any content selected previously
+    ? document.getSelection().getRangeAt(0)         // Store selection if found
+    : false;                                        // Mark as false to know no selection existed before
+    el.select();                                    // Select the < textarea > content
+    document.execCommand('copy');                   // Copy - only works as a result of a user action
+    document.body.removeChild(el);                  // Remove the < textarea > element
+    if (selected) {                                 // If a selection existed before copying
+    document.getSelection().removeAllRanges();      // Unselect everything on the HTML document
+    document.getSelection().addRange(selected);     // Restore the original selection
+    }
+  };
+
+  var record = document.getElementsByTagName('table')[1];
+  var tableRows = record.getElementsByTagName('tr');
+  var idRow = tableRows[tableRows.length-1];
+  var ppn = idRow.getElementsByClassName('rec_title');
+  ppn = ppn[0].innerText;
+
+  var ppnChecked = document.getElementsByClassName('ppn_checked');
+
+  if (ppnChecked.length > 0) {          // Script has run once already
+  copyToClipboard('STCN_' + ppn + '_01');
+  idRow.style.color='deepPink';            
+  } else {
+  copyToClipboard('z ppn ' + ppn);
+  idRow.style.color='green';          // Visual feedback
+  idRow.classList.add('ppn_checked');
+  }
+
+  return true;
+})();
+    </pre>
+    <br>
+    <p>(2) KB Copy</p>
+    <pre>
+(function(){
+//STCN_KB_03.js
+  function copyToClipboard (str) {
+    const el = document.createElement('textarea');  // Create a < textarea > element
+    el.value = str;                                 // Set its value to the string that you want copied
+    el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+    el.style.position = 'absolute';                 
+    el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+    document.body.appendChild(el);                  // Append the < textarea > element to the HTML document
+    const selected =            
+    document.getSelection().rangeCount > 0          // Check if there is any content selected previously
+    ? document.getSelection().getRangeAt(0)         // Store selection if found
+    : false;                                        // Mark as false to know no selection existed before
+    el.select();                                    // Select the < textarea > content
+    document.execCommand('copy');                   // Copy - only works as a result of a user action
+    document.body.removeChild(el);                  // Remove the < textarea > element
+    if (selected) {                                 // If a selection existed before copying
+    document.getSelection().removeAllRanges();      // Unselect everything on the HTML document
+    document.getSelection().addRange(selected);     // Restore the original selection
+    }
+  };
+
+  var record = document.getElementsByTagName('table')[1];
+  var tableRows = record.getElementsByTagName('tr');
+  var fieldCount = tableRows.length;
+  var holdingsRow = tableRows[fieldCount-2];
+  var label = holdingsRow.getElementsByClassName('rec_lable');
+  var holdings = '';    
+
+  if (label[0].innerText.match(/URL\:./)) {
+    holdingsRow = tableRows[fieldCount-3];
+  }
+  holdings = holdingsRow.getElementsByClassName('rec_title');            
+
+  var link = 'https://opc-kb.oclc.org/DB=1/SET=3/TTL=1/CLK?IKT=53&TRM=';
+  var shelfmark = '';
+  holdings = holdings[0].getElementsByTagName('div');
+  for (i = 0 ; i < holdings.length ; i ++){
+    if (holdings[i].children[0].innerText == 'Den Haag, KB') {
+      shelfmark = holdings[i].children[1].innerText;
+      holdings[i].children[1].style.color='green';
+      break;
+    }
+  }
+  shelfmark = shelfmark.replace(/^\:./g,'')
+             .replace(/ +/g,'+');
+
+  copyToClipboard(link+shelfmark);
+
+  return true;
+})();
+    </pre>
+    <br>
+    <p>(3) Multi-volume collation</p>
 <pre>
 (function(){
-    var output = {};
-    output.holdings = {};
-    var counter = 1;
-    var tableRows = document.getElementsByClassName('smaller')[1]
-                        	.getElementsByTagName('table')[0]
-							.getElementsByTagName('tr');
+  var output = {};
+  output.holdings = {};
+  var counter = 1;
+  var tableRows = document.getElementsByClassName('smaller')[1]
+                          .getElementsByTagName('table')[0]
+                          .getElementsByTagName('tr');
 
-    for (i=0 ; i < tableRows.length ; i++) {
-        var cells = tableRows[i].getElementsByTagName('td');
-		var key   = cells[0].innerText;
-		var value = cells[1].innerText;
+  for (i=0 ; i < tableRows.length ; i++) {
+    var cells = tableRows[i].getElementsByTagName('td');
+    var key   = cells[0].innerText;
+    var value = cells[1].innerText;
 // If holdings field, add to holdings object
-        if (key[0] == '2'){
-            var copyObj = {};
-            var copy = key.match(/.*?\/(\d+)/)[1];
-            copyObj[key.match(/(.*?)\/\d+/)[1]] = value;
-            if (!output.holdings[copy]){
-                output.holdings[copy] = copyObj;
-            } else {
-                output.holdings[copy] = Object.assign(output.holdings[copy],copyObj);
-            }
+    if (key[0] == '2'){
+      var copyObj = {};
+      var copy = key.match(/.*?\/(\d+)/)[1];
+      copyObj[key.match(/(.*?)\/\d+/)[1]] = value;
+      if (!output.holdings[copy]){
+        output.holdings[copy] = copyObj;
+      } else {
+        output.holdings[copy] = Object.assign(output.holdings[copy],copyObj);
+      }
 // If first or non-repeated field, add here
-        } else if (!output[key]) {
-            counter = 1;
-            output[key] = value;
+    } else if (!output[key]) {
+      counter = 1;
+      output[key] = value;
 // If repeated field, assign unique key and add here
-        } else {
-            counter++;
-            key = key + '/' + counter;
-            output[key] = value;
-        }
+    } else {
+      counter++;
+      key = key + '/' + counter;
+      output[key] = value;
     }
+  }
 
-// Delete any holdings that aren't from Trinity
-	for (key in output.holdings) {
-        var regex = /IR\-DTC/;
-        var string = output.holdings[key]['209A'];
-		if (!regex.test(string)) {
-            delete output.holdings[key];
-        }
-	}
+// Delete any holdings that aren't from chosen library
+  for (key in output.holdings) {
+    var regex = /IR\-DTC/; // TCD
+    var string = output.holdings[key]['209A'];
+    if (!regex.test(string)) {
+      delete output.holdings[key];
+    }
+  }
 
 function superscript(input){
    var output = input.replace(/`SUP`2`LO`/g,"²")
-					 .replace(/`SUP`3`LO`/g,"³")
-					 .replace(/`SUP`4`LO`/g,"⁴")
-					 .replace(/`SUP`5`LO`/g,"⁵")
-					 .replace(/`SUP`6`LO`/g,"⁶")
-					 .replace(/`SUP`8`LO`/g,"⁸")
-					 .replace(/`SUP`10`LO`/g,"¹⁰")
-					 .replace(/`SUP`12`LO`/g,"¹²")
-					 .replace(/`SUP`14`LO`/g,"¹⁴")
-					 .replace(/`SUP`16`LO`/g,"¹⁶")
-					 .replace(/`SUP`18`LO`/g,"¹⁸")
-					 .replace(/`SUP`4\/8`LO`/g,"⁴/⁸")
-					 .replace(/`SUP`8\/4`LO`/g,"⁸/⁴")
-					 .replace(/(\d+)\#/g,"; vol.$1: ")
-					 .replace(/\$a/g,"")
-					 .replace(/^\; /,"");
-	return output;
+                     .replace(/`SUP`3`LO`/g,"³")
+                     .replace(/`SUP`4`LO`/g,"⁴")
+                     .replace(/`SUP`5`LO`/g,"⁵")
+                     .replace(/`SUP`6`LO`/g,"⁶")
+                     .replace(/`SUP`8`LO`/g,"⁸")
+                     .replace(/`SUP`10`LO`/g,"¹⁰")
+                     .replace(/`SUP`12`LO`/g,"¹²")
+                     .replace(/`SUP`14`LO`/g,"¹⁴")
+                     .replace(/`SUP`16`LO`/g,"¹⁶")
+                     .replace(/`SUP`18`LO`/g,"¹⁸")
+                     .replace(/`SUP`4\/8`LO`/g,"⁴/⁸")
+                     .replace(/`SUP`8\/4`LO`/g,"⁸/⁴")
+                     .replace(/(\d+)\#/g,"; vol.$1: ")
+                     .replace(/\$a/g,"")
+                     .replace(/^\; /,"");
+  return output;
 }
 
 function copyToClipboard (str) {
@@ -103,25 +215,23 @@ function copyToClipboard (str) {
   el.style.left = '-9999px';                      // Move outside the screen to make it invisible
   document.body.appendChild(el);                  // Append the < textarea > element to the HTML document
   const selected =            
-    document.getSelection().rangeCount > 0        // Check if there is any content selected previously
-      ? document.getSelection().getRangeAt(0)     // Store selection if found
-      : false;                                    // Mark as false to know no selection existed before
+  document.getSelection().rangeCount > 0          // Check if there is any content selected previously
+    ? document.getSelection().getRangeAt(0)       // Store selection if found
+    : false;                                      // Mark as false to know no selection existed before
   el.select();                                    // Select the < textarea > content
   document.execCommand('copy');                   // Copy - only works as a result of a user action
   document.body.removeChild(el);                  // Remove the < textarea > element
   if (selected) {                                 // If a selection existed before copying
-    document.getSelection().removeAllRanges();    // Unselect everything on the HTML document
-    document.getSelection().addRange(selected);   // Restore the original selection
+  document.getSelection().removeAllRanges();      // Unselect everything on the HTML document
+  document.getSelection().addRange(selected);     // Restore the original selection
   }
 };
 
-    return copyToClipboard(superscript(output['147B/02']));
+return copyToClipboard(superscript(output['147B/02']));
+
 })();
->
-</pre>
-
-
-		</div>
-
-	</body>
+    </pre>
+    <br>
+  </div>
+</body>
 </html>
