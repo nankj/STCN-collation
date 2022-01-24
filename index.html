@@ -28,7 +28,7 @@
   <hr>
   <h2>(2) Get link to search for KB copy</h2>
     <p>This script captures the shelfmark of the first KB copy, if present, and marks it up as a link to perform an <i>aanvraagnummer</i> search in the KB catalogue. This can be pasted into the address bar in a new browser tab.</p> 
-    <a href="javascript:(function(){var e=document.getElementsByTagName('table')[1].getElementsByTagName('tr'),t=e.length,n=e[t-2],l='';n.getElementsByClassName('rec_lable')[0].innerText.match(/URL\:./)&&(n=e[t-3]);var o='';for(l=(l=n.getElementsByClassName('rec_title'))[0].getElementsByTagName('div'),i=0;i<l.length;i++)if('Den Haag, KB'==l[i].children[0].innerText){o=l[i].children[1].innerText,l[i].children[1].style.color='green';break}(function(e){const t=document.createElement('textarea');t.value=e,t.setAttribute('readonly',''),t.style.position='absolute',t.style.left='-9999px',document.body.appendChild(t);const n=document.getSelection().rangeCount>0&&document.getSelection().getRangeAt(0);t.select(),document.execCommand('copy'),document.body.removeChild(t),n&&(document.getSelection().removeAllRanges(),document.getSelection().addRange(n))})('https://opc-kb.oclc.org/DB=1/SET=3/TTL=1/CLK?IKT=53&TRM='+(o=o.replace(/^\:./g,'').replace(/ +/g,'+')))})();"><button class="text">KB copy</button></a>
+    <a href="javascript:(function(){var e=document.getElementsByTagName('table')[1].getElementsByTagName('tr'),t=e.length,n=e[t-2],l='';n.getElementsByClassName('rec_lable')[0].innerText.match(/URL\:./)&&(n=e[t-3]);var o='';for(l=(l=n.getElementsByClassName('rec_title'))[0].getElementsByTagName('div'),i=0;i<l.length;i++)if('Den Haag, KB'==l[i].children[0].innerText){o=l[i].children[1].innerText,l[i].children[1].style.color='green';break}(function(e){const t=document.createElement('textarea');t.value=e,t.setAttribute('readonly',''),t.style.position='absolute',t.style.left='-9999px',document.body.appendChild(t);const n=document.getSelection().rangeCount>0&&document.getSelection().getRangeAt(0);t.select(),document.execCommand('copy'),document.body.removeChild(t),n&&(document.getSelection().removeAllRanges(),document.getSelection().addRange(n))})('https://opc-kb.oclc.org/DB=1/SET=3/TTL=1/CLK?IKT=53&TRM=%27+(o=o.replace(/^\:./g,%27%27).replace(/ +/g,%27+%27).replace('plakk.','plakk')))})();"><button class="text">KB copy</button></a>
     <p><span class="output-title">Input: </span><span class="output">Den Haag, KB: pflt 14965</span></p>
     <p><span class="output-title">Output: </span><span class="output">https://opc-kb.oclc.org/DB=1/SET=3/TTL=1/CLK?IKT=53&TRM=pflt+14965</span></p>
   <hr>
@@ -134,7 +134,8 @@
     }
   }
   shelfmark = shelfmark.replace(/^\:./g,'')
-             .replace(/ +/g,'+');
+             .replace(/ +/g,'+')
+             .replace('plakk.','plakk');
 
   copyToClipboard(link+shelfmark);
 
